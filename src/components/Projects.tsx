@@ -3,6 +3,10 @@ import { Github, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+// ✅ Import images properly so they work in production
+import secretMinePreview from "@/assets/projects/secret-mine-preview.png";
+import noImageAvailable from "@/assets/projects/No_image_available.png";
+
 interface Project {
     title: string;
     description: string;
@@ -20,7 +24,7 @@ const Projects = () => {
             title: "Secret.Mine | Personal Diary Website",
             description:
                 "Secret.Mine is your personal space to document thoughts, moments, and memories — clean, simple, and secure.",
-            image: "src/assets/projects/secret-mine-preview.png",
+            image: secretMinePreview,
             tags: ["React", "TypeScript", "Vite", "Tailwind CSS", "Supabase", "Vercel"],
             github: "private",
             liveLink: "https://secret-mine.vercel.app/",
@@ -29,11 +33,11 @@ const Projects = () => {
             title: "PT Fitness",
             description:
                 "A gym client booking system where users can view trainer profiles and schedule personal training sessions. Built to simplify trainer-client interactions and session management.",
-            image: "src/assets/projects/No_image_available.png",
+            image: noImageAvailable,
             tags: ["React", "TypeScript", "Vite", "Tailwind CSS", "Supabase", "Vercel"],
             github: "private",
             liveLink: "",
-        }
+        },
     ];
 
     const displayedProjects = showAll ? projects : projects.slice(0, 4);
@@ -51,6 +55,7 @@ const Projects = () => {
                             key={index}
                             className="bg-white dark:bg-muted rounded-xl shadow-md hover:shadow-lg transition-shadow"
                         >
+                            {/* Image */}
                             <div className="relative overflow-hidden rounded-t-xl aspect-video">
                                 <img
                                     src={project.image}
@@ -59,12 +64,14 @@ const Projects = () => {
                                 />
                             </div>
 
+                            {/* Content */}
                             <div className="p-6 space-y-4">
                                 <h3 className="text-xl font-semibold">{project.title}</h3>
                                 <p className="text-muted-foreground text-sm leading-relaxed">
                                     {project.description}
                                 </p>
 
+                                {/* Tags */}
                                 <div className="flex flex-wrap gap-2">
                                     {project.tags.map((tag) => (
                                         <Badge key={tag} variant="secondary" className="text-xs">
@@ -73,6 +80,7 @@ const Projects = () => {
                                     ))}
                                 </div>
 
+                                {/* Buttons */}
                                 <div className="flex flex-wrap gap-3 pt-2">
                                     {project.github && project.github !== "private" && (
                                         <Button variant="outline" size="sm" asChild>
@@ -126,8 +134,3 @@ const Projects = () => {
 };
 
 export default Projects;
-
-/** NOTES:
-    github can be "private" or a URL
-
- */
