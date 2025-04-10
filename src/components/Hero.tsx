@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import ifwadImg from "@/assets/ifwad.jpeg"; // ✅ Import the image properly
 
 const Hero = () => {
     return (
@@ -35,7 +36,7 @@ const Hero = () => {
                 <div className="order-1 md:order-2 flex justify-center">
                     <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-lg transition-all">
                         <img
-                            src="src/assets/ifwad.jpeg"
+                            src={ifwadImg}
                             alt="Professional headshot"
                             className="w-full h-full object-cover"
                         />
