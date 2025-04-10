@@ -1,75 +1,27 @@
-import React, { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
 
 const Contact = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-
-        try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const result = await res.json();
-
-            if (res.ok) {
-                toast.success("Message sent!", {
-                    description: "Thank you for reaching out. I'll get back to you soon.",
-                });
-                setFormData({ name: "", email: "", subject: "", message: "" });
-            } else {
-                toast.error(result.error || "Failed to send message.");
-            }
-        } catch (error) {
-            toast.error("Something went wrong. Please try again later.");
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
     return (
-        <section id="contact" className="py-20 px-6 md:px-12 lg:px-20 bg-background">
+        <section
+            id="contact"
+            className="py-20 px-6 md:px-12 lg:px-20 bg-background"
+        >
             <div className="max-w-7xl mx-auto space-y-12">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center md:text-left">
                     Get In Touch
                 </h2>
 
-                <div className="grid md:grid-cols-2 gap-12">
-                    {/* Contact Info */}
-                    <div className="space-y-6">
+                {/* Layout */}
+                <div className="grid md:grid-cols-2 gap-8 items-start">
+                    {/* Left: Text & Info */}
+                    <div className="space-y-8">
                         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                            I'm currently open for freelance work and new opportunities. Whether you have a
-                            project in mind, a question, or just want to connect — feel free to reach out!
+                            I'm currently open for freelance work and new opportunities.
+                            Whether you have a project in mind, a question, or just want to
+                            connect — feel free to reach out!
                         </p>
 
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <ContactItem
                                 icon={<Mail className="h-5 w-5 text-primary" />}
                                 label="Email"
@@ -90,45 +42,19 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    {/* Contact Form */}
-                    <div className="bg-card border border-border p-6 rounded-xl shadow-sm">
-                        <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
-
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <Input
-                                name="name"
-                                placeholder="Your Name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
+                    {/* Right: Google Map */}
+                    <div className="flex items-center justify-center">
+                        <div className="w-full h-64 md:h-80 rounded-xl border border-border overflow-hidden">
+                            <iframe
+                                title="UniKL MIIT Location"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.8387359148293!2d101.69823039999999!3d3.1576469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc49f84cb5f97f%3A0xd0d260cdbba7f82d!2sUniversiti%20Kuala%20Lumpur%20-%20MIIT!5e0!3m2!1sen!2smy!4v1712818874820"
+                                width="100%"
+                                height="100%"
+                                loading="lazy"
+                                allowFullScreen
+                                className="w-full h-full rounded-xl border border-border"
                             />
-                            <Input
-                                name="email"
-                                type="email"
-                                placeholder="Your Email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                            <Input
-                                name="subject"
-                                placeholder="Subject"
-                                value={formData.subject}
-                                onChange={handleChange}
-                                required
-                            />
-                            <Textarea
-                                name="message"
-                                placeholder="Your Message"
-                                rows={5}
-                                value={formData.message}
-                                onChange={handleChange}
-                                required
-                            />
-                            <Button type="submit" className="w-full" disabled={isSubmitting}>
-                                {isSubmitting ? "Sending..." : "Send Message"}
-                            </Button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
