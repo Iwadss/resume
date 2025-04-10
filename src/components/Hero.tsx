@@ -33,7 +33,7 @@ const Hero = () => {
                             </Button>
                             <Button variant="ghost" asChild>
                                 <a
-                                    href="/resume-ifwad.pdf"
+                                    href="/resume-Ifwad.pdf"
                                     download
                                     className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition"
                                 >
