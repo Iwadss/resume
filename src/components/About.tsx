@@ -1,5 +1,3 @@
-import React from "react";
-
 const calculateAge = (birthDate: string) => {
     const birth = new Date(birthDate);
     const today = new Date();
