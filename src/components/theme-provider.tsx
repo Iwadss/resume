@@ -1,25 +1,50 @@
+// ==============================
 // File: components/theme-provider.tsx
-import { createContext, useContext, useEffect, useState } from "react"
+// ==============================
+// Provides global theme context and utilities to toggle between
+// "light", "dark", or "system" (auto) mode.
+// Automatically syncs with localStorage and updates <html> classes.
+// Wrap your app with <ThemeProvider> to enable theme switching.
+// ==============================
 
-type Theme = "dark" | "light" | "system"
+import { createContext, useContext, useEffect, useState } from "react";
 
+// ==============================
+// Type Definitions
+// ==============================
+
+// Enum-like theme types available in the app
+type Theme = "dark" | "light" | "system";
+
+// Props passed to the <ThemeProvider /> component
 type ThemeProviderProps = {
-    children: React.ReactNode
-    defaultTheme?: Theme
-    storageKey?: string
-}
+    children: React.ReactNode;       // Nested React components
+    defaultTheme?: Theme;           // Fallback theme if none stored
+    storageKey?: string;            // Key used in localStorage
+};
 
+// Internal context structure to store theme state and setter
 type ThemeProviderState = {
-    theme: Theme
-    setTheme: (theme: Theme) => void
-}
+    theme: Theme;
+    setTheme: (theme: Theme) => void;
+};
 
+// ==============================
+// Context Initialization
+// ==============================
+
+// Fallback state if ThemeProvider is not wrapped properly
 const initialState: ThemeProviderState = {
     theme: "system",
     setTheme: () => null,
-}
+};
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+// Create global Theme Context
+const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+
+// ==============================
+// ThemeProvider Component
+// ==============================
 
 export function ThemeProvider({
     children,
@@ -27,60 +52,74 @@ export function ThemeProvider({
     storageKey = "vite-ui-theme",
     ...props
 }: ThemeProviderProps) {
+    // Load stored theme or fallback to default
     const [theme, setTheme] = useState<Theme>(
         () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-    )
+    );
 
+    // Sync theme with <html> class and listen for system changes
     useEffect(() => {
-        const root = window.document.documentElement
+        const root = window.document.documentElement;
 
-        root.classList.remove("light", "dark")
+        // Ensure clean slate before applying
+        root.classList.remove("light", "dark");
 
         if (theme === "system") {
-            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-                .matches
+            // Detect system theme preference
+            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
                 ? "dark"
-                : "light"
+                : "light";
 
-            root.classList.add(systemTheme)
+            root.classList.add(systemTheme);
 
-            // Listen for changes in system theme
+            // Automatically update on system theme changes
             const handleSystemThemeChange = (event: MediaQueryListEvent) => {
-                root.classList.remove("light", "dark")
-                root.classList.add(event.matches ? "dark" : "light")
+                root.classList.remove("light", "dark");
+                root.classList.add(event.matches ? "dark" : "light");
             };
 
+            // Listen to OS-level changes
             const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
             mediaQueryList.addEventListener("change", handleSystemThemeChange);
 
+            // Cleanup listener on unmount
             return () => {
                 mediaQueryList.removeEventListener("change", handleSystemThemeChange);
             };
         } else {
-            root.classList.add(theme)
+            // Apply manually selected theme
+            root.classList.add(theme);
         }
-    }, [theme])
+    }, [theme]);
 
+    // Context value to provide globally
     const value = {
         theme,
         setTheme: (theme: Theme) => {
-            localStorage.setItem(storageKey, theme)
-            setTheme(theme)
+            localStorage.setItem(storageKey, theme); // Persist theme choice
+            setTheme(theme);                         // Update state
         },
-    }
+    };
 
     return (
         <ThemeProviderContext.Provider {...props} value={value}>
             {children}
         </ThemeProviderContext.Provider>
-    )
+    );
 }
+
+// ==============================
+// useTheme Hook
+// ==============================
+// Access current theme state and toggle method
+// Must be used inside a ThemeProvider wrapper
+// ==============================
 
 export const useTheme = () => {
-    const context = useContext(ThemeProviderContext)
+    const context = useContext(ThemeProviderContext);
 
     if (context === undefined)
-        throw new Error("useTheme must be used within a ThemeProvider")
+        throw new Error("useTheme must be used within a ThemeProvider");
 
-    return context
-}
+    return context;
+};

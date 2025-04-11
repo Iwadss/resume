@@ -9,8 +9,11 @@ const Hero = () => {
             className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 bg-background pt-10 pb-1"
         >
             <div className="max-w-7xl w-full grid md:grid-cols-2 items-center gap-12">
-                {/* Text Content */}
+                {/* ================================
+                    Left Column: Hero Text Content
+                ================================== */}
                 <div className="space-y-6 order-2 md:order-1">
+                    {/* Heading & Subheading */}
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
                         Hi, I'm <span className="text-primary">Muhammad Ifwad Bin Ismail</span>
                     </h1>
@@ -18,11 +21,13 @@ const Hero = () => {
                         <span>Software Engineering Student</span>
                         <span className="block">Full Stack Developer & UI/UX Enthusiast</span>
                     </h2>
+
+                    {/* Intro Paragraph */}
                     <p className="text-base text-muted-foreground max-w-lg">
                         I build clean, responsive interfaces and seamless user journeys. With a passion for detail and a focus on user needs, I turn ideas into polished digital products.
                     </p>
 
-                    {/* Buttons */}
+                    {/* CTA Buttons */}
                     <div className="space-y-4">
                         <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
                             <Button asChild>
@@ -43,16 +48,22 @@ const Hero = () => {
                             </Button>
                         </div>
 
-                        {/* Mobile Scroll Arrow */}
+                        {/* Mobile: Scroll Down Arrow */}
                         <div className="flex justify-center md:hidden pt-2">
-                            <a href="#about" aria-label="Scroll down" className="animate-bounce text-muted-foreground">
+                            <a
+                                href="#about"
+                                aria-label="Scroll down"
+                                className="animate-bounce text-muted-foreground"
+                            >
                                 <ArrowDown className="w-5 h-5" />
                             </a>
                         </div>
                     </div>
                 </div>
 
-                {/* Image / Avatar */}
+                {/* ================================
+                    Right Column: Hero Image
+                ================================== */}
                 <div className="order-1 md:order-2 flex justify-center">
                     <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-lg transition-all">
                         <img
@@ -64,10 +75,10 @@ const Hero = () => {
                 </div>
             </div>
 
-            {/* Desktop Scroll Arrow */}
+            {/* Desktop: Scroll Down Arrow */}
             <a
                 href="#about"
-                className="hidden md:flex absolute bottom-30 left-1/2 transform -translate-x-1/2 animate-bounce text-muted-foreground"
+                className="hidden md:flex absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce text-muted-foreground"
                 aria-label="Scroll down"
             >
                 <ArrowDown className="w-6 h-6" />

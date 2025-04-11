@@ -1,5 +1,9 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 
+// ==============================
+// Contact Section
+// ==============================
+
 const Contact = () => {
     return (
         <section
@@ -7,20 +11,26 @@ const Contact = () => {
             className="py-20 px-6 md:px-12 lg:px-20 bg-background"
         >
             <div className="max-w-7xl mx-auto space-y-12">
+                {/* Section Heading */}
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center md:text-left">
                     Get In Touch
                 </h2>
 
-                {/* Layout */}
+                {/* Grid Layout: Left = Info / Right = Map */}
                 <div className="grid md:grid-cols-2 gap-8 items-start">
-                    {/* Left: Text & Info */}
+
+                    {/* -------------------------------
+                        LEFT COLUMN: Contact Details
+                    -------------------------------- */}
                     <div className="space-y-8">
+                        {/* Introductory Text */}
                         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
                             I'm currently open for freelance work and new opportunities.
                             Whether you have a project in mind, a question, or just want to
                             connect — feel free to reach out!
                         </p>
 
+                        {/* Contact Information List */}
                         <div className="space-y-6">
                             <ContactItem
                                 icon={<Mail className="h-5 w-5 text-primary" />}
@@ -42,7 +52,9 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    {/* Right: Google Map */}
+                    {/* -------------------------------
+                        RIGHT COLUMN: Embedded Google Map
+                    -------------------------------- */}
                     <div className="flex items-center justify-center">
                         <div className="w-full h-64 md:h-80 rounded-xl border border-border overflow-hidden">
                             <iframe
@@ -62,6 +74,11 @@ const Contact = () => {
     );
 };
 
+// ==============================
+// Contact Item Component
+// Reusable row with icon + label + value
+// ==============================
+
 const ContactItem = ({
     icon,
     label,
@@ -74,7 +91,10 @@ const ContactItem = ({
     link?: string;
 }) => (
     <div className="flex items-center gap-4">
+        {/* Icon Bubble */}
         <div className="bg-primary/10 p-3 rounded-full">{icon}</div>
+
+        {/* Label + Value */}
         <div>
             <p className="font-medium">{label}</p>
             {link ? (

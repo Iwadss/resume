@@ -10,6 +10,10 @@ import {
     Code,
 } from "lucide-react";
 
+// ==============================
+// Type Declarations
+// ==============================
+
 interface SkillItem {
     name: string;
     image: string;
@@ -21,7 +25,14 @@ interface SkillCategory {
     skills: SkillItem[];
 }
 
+// ==============================
+// Skills Component
+// ==============================
+
 const Skills = () => {
+    // ----------------------------------------
+    // Skill Categories with Corresponding Icons and Technologies
+    // ----------------------------------------
     const skillCategories: SkillCategory[] = [
         {
             name: "Frontend",
@@ -40,7 +51,7 @@ const Skills = () => {
             icon: <Server className="w-10 h-10 text-primary" />,
             skills: [
                 { name: "Node.js", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                { name: "RESTful APIs", image: "https://img.icons8.com/ios/50/api-settings.png" },
+                { name: "REST APIs", image: "https://img.icons8.com/ios/50/api-settings.png" },
                 { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
                 { name: "PHP", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
                 { name: "C# (.NET)", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" },
@@ -71,10 +82,8 @@ const Skills = () => {
             skills: [
                 { name: "Vite", image: "https://vitejs.dev/logo.svg" },
                 { name: "npm", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-                { name: "yarn", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/yarn/yarn-original.svg" },
                 { name: "Git", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
                 { name: "VS Code", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-
             ],
         },
         {
@@ -99,10 +108,10 @@ const Skills = () => {
             name: "Programming Languages",
             icon: <Code className="w-10 h-10 text-primary" />,
             skills: [
-                { name: "Java", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", },
-                { name: "C#", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg", },
-                { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", },
-                { name: "C++", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", },
+                { name: "Java", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+                { name: "C#", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
+                { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                { name: "C++", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
             ],
         }
     ];
@@ -110,17 +119,19 @@ const Skills = () => {
     return (
         <section id="skills" className="py-20 px-6 md:px-12 lg:px-20 bg-background">
             <div className="max-w-7xl mx-auto">
+                {/* Section Heading */}
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-10 text-center md:text-left">
                     Skills & Expertise
                 </h2>
 
-                {/* Grid with 4 columns */}
+                {/* Responsive Grid Layout for Skill Cards */}
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {skillCategories.map((category) => (
                         <div
                             key={category.name}
                             className="bg-white dark:bg-muted rounded-2xl shadow-sm divide-y divide-border overflow-hidden transition-all duration-300 hover:shadow-md hover:scale-[1.02] hover:ring-2 hover:ring-primary/20"
                         >
+                            {/* Category Header */}
                             <div className="flex items-center gap-4 p-4">
                                 {category.icon}
                                 <div>
@@ -130,6 +141,8 @@ const Skills = () => {
                                     </p>
                                 </div>
                             </div>
+
+                            {/* Skill List */}
                             <ul className="max-h-32 overflow-y-auto">
                                 {category.skills.map((skill) => (
                                     <li

@@ -5,9 +5,14 @@ import {
     Mail,
 } from "lucide-react";
 
+// ==============================
+// Footer Component
+// ==============================
+
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
+    // Social media and contact links
     const socialLinks = [
         {
             name: "GitHub",
@@ -34,13 +39,19 @@ const Footer = () => {
     return (
         <footer className="bg-secondary py-10 px-6 md:px-12 lg:px-20 border-t border-border">
             <div className="max-w-7xl mx-auto space-y-8">
-                {/* Top section */}
+
+                {/* =====================
+                    TOP SECTION: Branding + Social
+                ====================== */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+
+                    {/* Brand Name + Title */}
                     <div className="text-center md:text-left">
                         <h2 className="text-2xl font-bold">Muhammad Ifwad Bin Ismail</h2>
                         <p className="text-muted-foreground">Full Stack Developer</p>
                     </div>
 
+                    {/* Social Icons */}
                     <div className="flex gap-4">
                         {socialLinks.map((link) => (
                             <a
@@ -57,10 +68,15 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Bottom section */}
+                {/* =====================
+                    BOTTOM SECTION: Copyright + Nav
+                ====================== */}
                 <div className="flex flex-col md:flex-row justify-between items-center border-t border-border pt-6 text-sm text-muted-foreground gap-4">
+
+                    {/* Copyright */}
                     <p>© {currentYear} Muhammad Ifwad Bin Ismail. All rights reserved.</p>
 
+                    {/* Footer Navigation */}
                     <nav className="flex flex-wrap gap-4">
                         <a href="#about" className="hover:text-primary transition">About</a>
                         <a href="#skills" className="hover:text-primary transition">Skills</a>

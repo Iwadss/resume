@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# Ifwad Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## 📌 Ifwad Portfolio — Developer Notes & Best Practices
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔧 Tech Stack
+- **Frontend Framework**: React + TypeScript
+- **Styling**: Tailwind CSS + ShadCN UI
+- **Icons**: Lucide React Icons
+- **Build Tool**: Vite (with HMR and optimized DX)
+- **Hosting**: [Vercel](https://vercel.com/) (CI/CD enabled via GitHub)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🧩 Folder Structure Overview
+| Folder/File         | Description |
+|---------------------|-------------|
+| `/components/`      | Reusable UI components (Header, Footer, ModeToggle, etc.) |
+| `/pages/Index.tsx`  | Main page that composes all sections |
+| `/assets/`          | Project images like avatar or project thumbnails |
+| `/projects/`        | Array of projects used in the Projects section |
+| `/theme-provider.tsx` | Global dark/light/system theme context |
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+### 🧠 Key Components
+- **`Header.tsx`** – Sticky top nav with scroll-aware background & theme toggle.
+- **`Hero.tsx`** – Personal introduction with resume download and scroll prompt.
+- **`Skills.tsx`** – Categorized skill cards with tech logos.
+- **`Projects.tsx`** – Filtered project grid, "show more" toggle, and badge tech tags.
+- **`Contact.tsx`** – Email/Phone/Location info with Google Map embed.
+- **`Footer.tsx`** – Social icons, internal navigation, and copyright.
+
+---
+
+### ☁️ Vercel Deployment Notes
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- `.env` for sensitive data like email credentials should never be committed.
+- Vercel reads from your `vite.config.ts` and supports TypeScript out of the box.
+- [Optional] Add `robots.txt` and `sitemap.xml` for SEO.
+
+### 🌐 Custom Domain
+
+- **Domain**: [ifwad.my](https://ifwad.my)
+- Purchased via: [Exabytes](https://billing.exabytes.my/)
+- Add domain in [Vercel Project Settings > Domains](https://vercel.com/dashboard)
+
+---
+
+### 🔐 Environment Config (Optional Future Use)
+If enabling contact forms or mailing:
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+EMAIL_USER=iwadss99@gmail.com
+EMAIL_PASS=your_app_password_here
 ```
+> Use **Vercel Environment Variables** instead of committing sensitive `.env` files.
+
+---
+
+### 🛠️ Future Improvements & Reminders
+- ✅ Replace placeholder images (`No_image_available.png`) with real project screenshots
+- ✅ Integrate email form using `/api/contact` + Nodemailer (optional)
+- ✅ Setup proper SEO meta tags in `index.html`
+- ✅ Consider splitting into routes with React Router for larger scale
+- ✅ Monitor performance via Vercel Analytics (optional)
+
+---
+
+### ✅ Development Tips
+- Run locally with: `npm run dev`
+- Format code with: `npm run format`
+- Recommended extensions:
+  - ESLint + Prettier
+  - Tailwind CSS IntelliSense
+  - Icons support for VSCode
