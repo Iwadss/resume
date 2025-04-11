@@ -47,6 +47,10 @@
 - Purchased via: [Exabytes](https://billing.exabytes.my/)
 - Add domain in [Vercel Project Settings > Domains](https://vercel.com/dashboard)
 
+how to make it work 
+1. open vercel project > domain > insert domain name 
+2. go to exbytes > Domain > Nameservers > insert nameservers with vercel
+
 ---
 
 ### 🔐 Environment Config (Optional Future Use)
