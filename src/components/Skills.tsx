@@ -50,11 +50,9 @@ const Skills = () => {
             name: "Backend",
             icon: <Server className="w-10 h-10 text-primary" />,
             skills: [
-                { name: "Node.js", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                { name: "REST APIs", image: "https://img.icons8.com/ios/50/api-settings.png" },
-                { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                { name: "Node.js (L)", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+                { name: "REST APIs (L)", image: "https://img.icons8.com/ios/50/api-settings.png" },
                 { name: "PHP", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
-                { name: "C# (.NET)", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" },
             ],
         },
         {
@@ -62,9 +60,7 @@ const Skills = () => {
             icon: <Database className="w-10 h-10 text-primary" />,
             skills: [
                 { name: "Supabase", image: "https://www.vectorlogo.zone/logos/supabase/supabase-icon.svg" },
-                { name: "MySQL", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-                { name: "Firebase", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
-                { name: "MongoDB", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+                { name: "MongoDB (L)", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
             ],
         },
         {
@@ -73,7 +69,6 @@ const Skills = () => {
             skills: [
                 { name: "Flutter", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
                 { name: "Dart", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
-                { name: "React Native", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
             ],
         },
         {
@@ -102,6 +97,7 @@ const Skills = () => {
             skills: [
                 { name: "Vercel", image: "https://www.vectorlogo.zone/logos/vercel/vercel-icon.svg" },
                 { name: "Netlify", image: "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
+                { name: "Cloudflare", image: "https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg" },
             ],
         },
         {
@@ -109,9 +105,6 @@ const Skills = () => {
             icon: <Code className="w-10 h-10 text-primary" />,
             skills: [
                 { name: "Java", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-                { name: "C#", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" },
-                { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-                { name: "C++", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
             ],
         }
     ];

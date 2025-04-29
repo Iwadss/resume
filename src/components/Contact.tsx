@@ -35,8 +35,8 @@ const Contact = () => {
                             <ContactItem
                                 icon={<Mail className="h-5 w-5 text-primary" />}
                                 label="Email"
-                                value="iwadss99@gmail.com"
-                                link="mailto:iwadss99@gmail.com"
+                                value="muhammadifwad100@gmail.com"
+                                link="mailto:muhammadifwad100@gmail.com"
                             />
                             <ContactItem
                                 icon={<Phone className="h-5 w-5 text-primary" />}
