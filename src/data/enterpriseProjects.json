@@ -1,0 +1,149 @@
+[
+  {
+    "id": "portal",
+    "icon": "🏗️",
+    "title": "Platform Delivery Portal",
+    "subtitle": "Learning & Development Hub",
+    "accent": "from-blue-500 to-cyan-500",
+    "accentText": "text-blue-600 dark:text-blue-400",
+    "description": "Developed and enhanced an internal web application used by the Platform Delivery team to centralize onboarding resources and improve knowledge accessibility for teams.",
+    "problem": "The team lacked a centralised hub for developers to access onboarding materials and training resources. Knowledge was siloed across email threads and SharePoint folders, causing delays for new engineers.",
+    "solution": "Implemented a Learning & Development Hub within the Platform Delivery Portal with dynamic content sections, role-based access, SharePoint REST API document retrieval, and onboarding progress tracking.",
+    "tools": [
+      "JavaScript",
+      "JSON",
+      "OpenShift",
+      "HTML",
+      "CSS",
+      "CI/CD",
+      "Github",
+      "SharePoint REST API",
+      "Nintex Automation Cloud"
+    ],
+    "impact": [
+      "Streamlined new hire transitions through structured onboarding and guided cloud learning paths.",
+      "Facilitated technical knowledge transfer by connecting mentees with subject matter experts.",
+      "Enhanced team collaboration by showcasing certifications to identify and consult with internal experts.",
+      "Boosted team technical readiness by centralizing specialized training events and modules."
+    ],
+    "architecture": [
+      {
+        "label": "Frontend",
+        "items": [
+          "React Components",
+          "Responsive UI"
+        ]
+      },
+      {
+        "label": "Integration",
+        "items": [
+          "SharePoint REST API",
+          "Azure AD Auth"
+        ]
+      },
+      {
+        "label": "Data",
+        "items": [
+          "SharePoint Document Library",
+          "Role Metadata"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sss-automation",
+    "icon": "🔐",
+    "title": "Secure Server Solution (SSS)",
+    "subtitle": "End-to-End Infrastructure Orchestration",
+    "accent": "from-violet-500 to-purple-600",
+    "accentText": "text-violet-600 dark:text-violet-400",
+    "description": "Architected an automated workflow to provision encrypted shared folders and DFS links, integrating ServiceNow with Ansible Tower to streamline enterprise data protection.",
+    "problem": "Manual folder provisioning was slow and prone to human error, requiring disjointed hand-offs between Corporate Delivery and PAA teams for encryption and DFS link creation.",
+    "solution": "Developed a hybrid automation flow using ServiceNow forms to trigger Ansible Tower playbooks, managing server-side folder creation, permission assignments, and DFS link generation.",
+    "tools": [
+      "Ansible Tower",
+      "YAML",
+      "ServiceNow (SNOW)",
+      "DFS (Distributed File System)",
+      "Linux",
+      "Thales CipherTrust"
+    ],
+    "impact": [
+      "Transformed manual, multi-team hand-offs into a continuous automated workflow, significantly reducing turnaround time for folder requests.",
+      "Eliminated configuration errors in folder permissions and paths through system-driven logic and YAML playbooks.",
+      "Improved user accessibility by automating DFS link generation, removing the need for users to know specific back-end server locations.",
+      "Bridged the gap between front-end user requests and back-end infrastructure execution via enterprise-scale orchestration."
+    ],
+    "architecture": [
+      {
+        "label": "Orchestration",
+        "items": [
+          "ServiceNow Triggers",
+          "Ansible Tower API"
+        ]
+      },
+      {
+        "label": "Automation",
+        "items": [
+          "YAML Playbooks",
+          "Folder/ACL Logic"
+        ]
+      },
+      {
+        "label": "Security",
+        "items": [
+          "Thales CTE Encryption",
+          "DFS Link Mapping"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ssl-automation",
+    "icon": "🔒",
+    "title": "SSL Certificate Automation",
+    "subtitle": "Cloud Security & ACM Integration",
+    "accent": "from-emerald-500 to-teal-600",
+    "accentText": "text-emerald-600 dark:text-emerald-400",
+    "description": "Developed Ansible-driven automation for the AWS Certificate Manager (ACM) lifecycle to bridge internal certificate management with managed AWS (mAWS) cloud environments.",
+    "problem": "Cloud-native resources required a seamless, automated connection between internal automation engines and the AWS portal to prevent manual provisioning delays.",
+    "solution": "Built specialized YAML playbooks within Ansible Tower to programmatically interface with AWS ACM and integrated with ServiceNow for automated request handling.",
+    "tools": [
+      "Ansible Tower",
+      "ServiceNow (SNOW)",
+      "AWS ACM",
+      "YAML",
+      "mAWS (Managed AWS)",
+      "Azure Portal"
+    ],
+    "impact": [
+      "Automated the end-to-end SSL/TLS certificate lifecycle, ensuring seamless provisioning and renewal for cloud-native resources.",
+      "Integrated internal automation engines with managed AWS (mAWS) and Azure portals to support secure, hybrid-cloud security requirements.",
+      "Architected a programmatic interface using Ansible Tower and ServiceNow to deliver faster, more reliable certificate deployment.",
+      "Strengthened the organization's security posture by centralizing and standardizing automated certificate management workflows."
+    ],
+    "architecture": [
+      {
+        "label": "Orchestration",
+        "items": [
+          "Ansible Tower",
+          "ServiceNow Triggers"
+        ]
+      },
+      {
+        "label": "Cloud Platforms",
+        "items": [
+          "AWS Certificate Manager",
+          "Azure Portal (IAM)"
+        ]
+      },
+      {
+        "label": "Automation",
+        "items": [
+          "YAML Playbooks",
+          "mAWS Integration"
+        ]
+      }
+    ]
+  }
+]

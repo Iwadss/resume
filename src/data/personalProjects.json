@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Secret.Mine | Personal Diary Website",
+    "description": "Secret.Mine is your personal space to document thoughts, moments, and memories — clean, simple, and secure.",
+    "image": "secretMinePreview",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Supabase",
+      "Vercel"
+    ],
+    "github": "private",
+    "liveLink": "https://secret-mine.vercel.app/"
+  },
+  {
+    "title": "PT Fitness",
+    "description": "A gym client booking system where users can view trainer profiles and schedule personal training sessions. Built to simplify trainer-client interactions and session management.",
+    "image": "noImageAvailable",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Supabase",
+      "Vercel"
+    ],
+    "github": "private",
+    "liveLink": ""
+  }
+]

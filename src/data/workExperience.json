@@ -1,0 +1,69 @@
+[
+  {
+    "id": "exxon",
+    "company": "ExxonMobil",
+    "role": "Developer Intern",
+    "team": "Corporate Delivery Team",
+    "location": "Kuala Lumpur, Malaysia",
+    "period": "28 Jul 2025 – 6 Feb 2026",
+    "type": "Internship",
+    "logo": "src/assets/logos/Exxon logo.png",
+    "responsibilities": [
+      "Enhanced the Platform Delivery Portal, improving developer experience and internal tooling efficiency.",
+      "Built automation workflows using Ansible and YAML to streamline repetitive infrastructure tasks.",
+      "Integrated AWS Certificate Manager for automated SSL/TLS certificate lifecycle management.",
+      "Developed SharePoint REST API solutions to enable seamless data exchange across enterprise systems.",
+      "Participated in Agile SAFe ceremonies including PI Planning, Sprint Reviews, and retrospectives."
+    ],
+    "techUsed": [
+      "AWS",
+      "Ansible",
+      "YAML",
+      "SharePoint REST API",
+      "PowerShell",
+      "Agile SAFe"
+    ]
+  },
+  {
+    "id": "machines",
+    "company": "Machines Sdn Bhd",
+    "role": "Sales Assistant",
+    "location": "Kuala Lumpur, Malaysia",
+    "period": "Sep 2023 – Oct 2023",
+    "type": "Full-Time",
+    "logo": "src/assets/logos/machines logo.png",
+    "responsibilities": [
+      "Assisted customers by recommending suitable electronic products.",
+      "Explained product features and benefits to support purchase decisions.",
+      "Maintained store presentation and supported daily sales operations."
+    ]
+  },
+  {
+    "id": "jps",
+    "company": "Jabatan Pengairan dan Saliran Malaysia",
+    "role": "IT Support Intern",
+    "location": "Kelantan, Malaysia",
+    "period": "Feb 2023 – Jun 2023",
+    "type": "Internship",
+    "logo": "src/assets/logos/JPS logo.png",
+    "responsibilities": [
+      "Provided IT support by troubleshooting hardware and software issues.",
+      "Assisted in maintaining IT documentation and system records.",
+      "Supported coordination of national-level meetings across government departments."
+    ]
+  },
+  {
+    "id": "ecoshop",
+    "company": "Eco-Shop Marketing Bhd",
+    "role": "Store Assistant",
+    "location": "Kuala Lumpur, Malaysia",
+    "period": "Jun 2022 – Jul 2022",
+    "type": "Full-Time",
+    "logo": "src/assets/logos/eco logo.png",
+    "responsibilities": [
+      "Managed product inventory and stock organisation.",
+      "Supported daily store operations and customer service.",
+      "Assisted during peak hours to ensure smooth store workflow."
+    ]
+  }
+]

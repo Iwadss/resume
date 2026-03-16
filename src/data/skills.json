@@ -1,0 +1,99 @@
+[
+  {
+    "id": "web",
+    "label": "Web Development",
+    "icon": "Layout",
+    "color": "text-blue-600 dark:text-blue-400",
+    "bgActive": "bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800",
+    "skills": [
+      { "name": "HTML5", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { "name": "CSS3", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { "name": "JavaScript", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { "name": "TypeScript", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+      { "name": "React", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { "name": "Tailwind CSS", "level": "core", "image": "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" },
+      { "name": "Flutter", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
+      { "name": "Dart", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
+      { "name": "PHP", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+      { "name": "Node.js", "level": "familiar", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" }
+    ]
+  },
+  {
+    "id": "devops",
+    "label": "DevOps & Cloud",
+    "icon": "Cloud",
+    "color": "text-violet-600 dark:text-violet-400",
+    "bgActive": "bg-violet-50 dark:bg-violet-950/40 border-violet-200 dark:border-violet-800",
+    "skills": [
+      { "name": "AWS", "level": "familiar", "image": "https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" },
+      { "name": "Azure", "level": "familiar", "image": "https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" },
+      { "name": "Azure DevOps", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" },
+      { "name": "Ansible", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/ansible/ansible-icon.svg" },
+      { "name": "OpenShift", "level": "familiar", "image": "https://www.vectorlogo.zone/logos/openshift/openshift-icon.svg" },
+      { "name": "PowerShell", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/microsoft_powershell/microsoft_powershell-icon.svg" },
+      { "name": "Linux", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
+      { "name": "YAML", "level": "experienced", "image": "https://img.icons8.com/color/48/yaml.png" },
+      { "name": "CI/CD", "level": "experienced", "image": "https://img.icons8.com/color/48/deployment.png" },
+      { "name": "Nintex Automation Cloud", "level": "experienced", "image": "https://img.icons8.com/color/48/process.png" }
+    ]
+  },
+  {
+    "id": "data",
+    "label": "Data & Backend",
+    "icon": "Database",
+    "color": "text-emerald-600 dark:text-emerald-400",
+    "bgActive": "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800",
+    "skills": [
+      { "name": "Supabase", "level": "core", "image": "https://www.vectorlogo.zone/logos/supabase/supabase-icon.svg" },
+      { "name": "REST APIs", "level": "core", "image": "https://img.icons8.com/ios/50/api-settings.png" },
+      { "name": "SharePoint API", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/microsoft_sharepoint/microsoft_sharepoint-icon.svg" },
+      { "name": "MongoDB", "level": "familiar", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+      { "name": "ServiceNow", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/servicenow/servicenow-icon.svg" },
+      { "name": "Java", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" }
+    ]
+  },
+  {
+    "id": "ai",
+    "label": "AI & Machine Learning",
+    "icon": "BrainCircuit",
+    "color": "text-pink-600 dark:text-pink-400",
+    "bgActive": "bg-pink-50 dark:bg-pink-950/40 border-pink-200 dark:border-pink-800",
+    "skills": [
+      { "name": "Prompt Engineering", "level": "experienced", "image": "https://img.icons8.com/color/48/chatgpt.png" },
+      { "name": "AI-assisted Dev", "level": "experienced", "image": "https://img.icons8.com/color/48/github-copilot.png" },
+      { "name": "Generative AI Tools", "level": "experienced", "image": "https://img.icons8.com/color/48/artificial-intelligence.png" },
+      { "name": "Artificial Intelligence", "level": "familiar", "image": "https://img.icons8.com/color/48/robot-3.png" },
+      { "name": "Machine Learning", "level": "familiar", "image": "https://img.icons8.com/color/48/machine-learning.png" }
+    ]
+  },
+  {
+    "id": "tools",
+    "label": "Tools & Design",
+    "icon": "Wrench",
+    "color": "text-orange-600 dark:text-orange-400",
+    "bgActive": "bg-orange-50 dark:bg-orange-950/40 border-orange-200 dark:border-orange-800",
+    "skills": [
+      { "name": "Git", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+      { "name": "VS Code", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+      { "name": "Figma", "level": "experienced", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+      { "name": "Vite", "level": "core", "image": "https://vitejs.dev/logo.svg" },
+      { "name": "npm", "level": "core", "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
+      { "name": "Vercel", "level": "core", "image": "https://www.vectorlogo.zone/logos/vercel/vercel-icon.svg" },
+      { "name": "Netlify", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" },
+      { "name": "Cloudflare", "level": "experienced", "image": "https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg" }
+    ]
+  },
+  {
+    "id": "methodologies",
+    "label": "Methodologies",
+    "icon": "ClipboardList",
+    "color": "text-teal-600 dark:text-teal-400",
+    "bgActive": "bg-teal-50 dark:bg-teal-950/40 border-teal-200 dark:border-teal-800",
+    "skills": [
+      { "name": "Agile", "level": "experienced", "image": "https://img.icons8.com/color/48/agile.png" },
+      { "name": "Scrum", "level": "experienced", "image": "https://img.icons8.com/color/48/scrum.png" },
+      { "name": "SAFe", "level": "experienced", "image": "https://img.icons8.com/color/48/organisation.png" },
+      { "name": "SDLC", "level": "experienced", "image": "https://img.icons8.com/color/48/workflow.png" }
+    ]
+  }
+]

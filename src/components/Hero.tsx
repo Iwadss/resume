@@ -1,34 +1,56 @@
+import { FULL_NAME, HEADLINE } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { FileDown, ArrowDown } from "lucide-react";
 import ifwadImg from "@/assets/ifwad.jpeg";
+// @ts-expect-error - No declaration file for LaserFlow.jsx
+import LaserFlow from "./LaserFlow";
 
 const Hero = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 bg-background pt-10 pb-1"
+            className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 bg-background overflow-hidden"
         >
-            <div className="max-w-7xl w-full grid md:grid-cols-2 items-center gap-12">
+            {/* Background Animation */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-50 dark:opacity-80 rotate-180">
+                <LaserFlow
+                    color="#87509b"
+                    wispDensity={1}
+                    flowSpeed={0.35}
+                    verticalSizing={2}
+                    horizontalSizing={0.5}
+                    fogIntensity={0.45}
+                    fogScale={0.3}
+                    wispSpeed={15}
+                    wispIntensity={5}
+                    flowStrength={0.25}
+                    decay={1.1}
+                    horizontalBeamOffset={0}
+                    verticalBeamOffset={-0.5}
+                />
+            </div>
+
+            <div className="max-w-7xl w-full grid md:grid-cols-2 items-center gap-12 relative z-10">
                 {/* ================================
                     Left Column: Hero Text Content
                 ================================== */}
-                <div className="space-y-6 order-2 md:order-1">
+                <div className="order-2 md:order-1 flex flex-col justify-center">
                     {/* Heading & Subheading */}
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-                        Hi, I'm <span className="text-primary">Muhammad Ifwad Bin Ismail</span>
+                        Hi, I'm <span style={{ background: "linear-gradient(90deg, #7C4DFF, #3BA8FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{FULL_NAME}</span>
                     </h1>
-                    <h2 className="text-xl md:text-2xl text-muted-foreground">
-                        <span>Software Engineering Student</span>
-                        <span className="block">Full Stack Developer & UI/UX Enthusiast</span>
+                    <h2 className="text-xl md:text-2xl text-muted-foreground mt-4">
+                        <span>Software Engineering</span>
+                        <span className="block">{HEADLINE}</span>
                     </h2>
 
                     {/* Intro Paragraph */}
-                    <p className="text-base text-muted-foreground max-w-lg">
-                        I build clean, responsive interfaces and seamless user journeys. With a passion for detail and a focus on user needs, I turn ideas into polished digital products.
+                    <p className="text-base text-muted-foreground max-w-lg mt-5">
+                        I build scalable software solutions, modern web applications, and automation tools that improve developer workflows and user experiences.
                     </p>
 
                     {/* CTA Buttons */}
-                    <div className="space-y-4">
+                    <div className="mt-8 space-y-4">
                         <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
                             <Button asChild>
                                 <a href="#contact">Get in Touch</a>

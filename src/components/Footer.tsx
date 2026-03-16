@@ -1,9 +1,5 @@
-import {
-    Github,
-    Linkedin,
-    Instagram,
-    Mail,
-} from "lucide-react";
+import { Github, Linkedin, Instagram, Mail } from "lucide-react";
+import { FULL_NAME, HEADLINE } from "@/lib/constants";
 
 // ==============================
 // Footer Component
@@ -47,8 +43,8 @@ const Footer = () => {
 
                     {/* Brand Name + Title */}
                     <div className="text-center md:text-left">
-                        <h2 className="text-2xl font-bold">Muhammad Ifwad Bin Ismail</h2>
-                        <p className="text-muted-foreground">Full Stack Developer</p>
+                        <h2 className="text-2xl font-bold">{FULL_NAME}</h2>
+                        <p className="text-muted-foreground">{HEADLINE}</p>
                     </div>
 
                     {/* Social Icons */}
@@ -74,13 +70,15 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center border-t border-border pt-6 text-sm text-muted-foreground gap-4">
 
                     {/* Copyright */}
-                    <p>© {currentYear} Muhammad Ifwad Bin Ismail. All rights reserved.</p>
+                    <p>© {currentYear} {FULL_NAME}. All rights reserved.</p>
 
                     {/* Footer Navigation */}
                     <nav className="flex flex-wrap gap-4">
                         <a href="#about" className="hover:text-primary transition">About</a>
-                        <a href="#skills" className="hover:text-primary transition">Skills</a>
+                        <a href="#experience" className="hover:text-primary transition">Experience</a>
                         <a href="#projects" className="hover:text-primary transition">Projects</a>
+                        <a href="#skills" className="hover:text-primary transition">Skills</a>
+                        <a href="#certifications" className="hover:text-primary transition">Certifications</a>
                         <a href="#contact" className="hover:text-primary transition">Contact</a>
                     </nav>
                 </div>

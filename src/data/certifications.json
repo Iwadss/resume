@@ -1,0 +1,25 @@
+[
+  {
+    "name": "CompTIA Cloud+ (CV0-004)",
+    "issuer": "CompTIA",
+    "issuedTo": "Muhammad Ifwad Ismail",
+    "examCode": "CV0-004",
+    "credentialId": "COMP001022947511",
+    "verificationCode": "df378bcb68534637a62130748e7a7264",
+    "date": "13 December 2025",
+    "expiry": "13 December 2028",
+    "status": "Active",
+    "logo": "https://www.vectorlogo.zone/logos/comptia/comptia-ar21.svg",
+    "description": "Validates skills required to maintain and optimise cloud infrastructure services, including security, deployment models, and automation.",
+    "skills": [
+      "Cloud Architecture",
+      "Security",
+      "Automation",
+      "Virtualisation",
+      "Infrastructure"
+    ],
+    "verifyUrl": "http://verify.CompTIA.org",
+    "credlyUrl": "https://www.credly.com/badges/38deed3a-c61b-4be2-a219-b4ca8b5e64bc/linked_in_profile",
+    "color": "from-sky-500 to-blue-600"
+  }
+]

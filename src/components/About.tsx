@@ -1,3 +1,4 @@
+import { FULL_NAME } from "@/lib/constants";
 // Utility function to calculate age based on birth date
 const calculateAge = (birthDate: string) => {
     const birth = new Date(birthDate);
@@ -18,7 +19,7 @@ const About = () => {
 
     return (
         <section id="about" className="bg-secondary/30 py-20 px-6 md:px-12 lg:px-20">
-            <div className="max-w-7xl mx-auto space-y-12">
+            <div className="max-w-7xl mx-auto space-y-5">
                 {/* Section Heading */}
                 <h2 className="text-4xl font-bold tracking-tight text-center md:text-left">
                     About Me
@@ -31,18 +32,13 @@ const About = () => {
                     ================================== */}
                     <div className="space-y-6">
                         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                            I’m a highly motivated Software Engineering student at Universiti Kuala Lumpur MIIT
-                            with a strong passion for full-stack development and clean, user-focused design.
-                            I enjoy solving real-world problems through digital experiences that are both intuitive and efficient.
+                            I am a Software Engineering graduate from Universiti Kuala Lumpur MIIT with interests in full-stack development, cloud technologies, and enterprise systems.
                         </p>
                         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                            Through my academic journey and hands-on project experience, I've developed a
-                            keen eye for detail and a mindset focused on usability, performance, and accessibility.
-                            I find great satisfaction in turning ideas into polished and impactful digital solutions.
+                            During my internship at ExxonMobil, I worked on improving internal developer platforms and building automation workflows for infrastructure tasks.
                         </p>
                         <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                            Outside of coding, I enjoy hiking, gym workouts, and visiting nature to unwind and recharge.
-                            I’m also curious about new technologies, and always eager to learn, grow, and collaborate on meaningful projects.
+                            I enjoy solving technical problems, building efficient software solutions, and continuously learning new technologies.
                         </p>
                     </div>
 
@@ -52,10 +48,10 @@ const About = () => {
                     <div className="w-full flex justify-center md:justify-end">
                         <div className="bg-white dark:bg-muted p-6 rounded-xl shadow-md w-full max-w-lg transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-[1.02] hover:ring-2 hover:ring-primary/20">
                             <h3 className="text-xl font-semibold mb-4">At a Glance</h3>
-                            <ul className="space-y-2 text-sm md:text-base">
+                            <ul className="space-y-3 text-sm md:text-base">
                                 <li className="flex justify-between">
                                     <span className="font-medium text-muted-foreground">Name:</span>
-                                    <span>Muhammad Ifwad Bin Ismail</span>
+                                    {FULL_NAME}
                                 </li>
                                 <li className="flex justify-between">
                                     <span className="font-medium text-muted-foreground">Age:</span>
