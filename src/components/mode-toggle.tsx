@@ -25,7 +25,7 @@ export function ModeToggle() {
 
     // Toggle between dark and light mode
     const handleToggle = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme((theme === "dark" ? "light" : "dark") as any);
     };
 
     return (
