@@ -7,7 +7,7 @@
     "location": "Kuala Lumpur, Malaysia",
     "period": "28 Jul 2025 – 6 Feb 2026",
     "type": "Internship",
-    "logo": "src/assets/logos/Exxon logo.png",
+    "logo": "/logos/Exxon logo.png",
     "responsibilities": [
       "Enhanced the Platform Delivery Portal, improving developer experience and internal tooling efficiency.",
       "Built automation workflows using Ansible and YAML to streamline repetitive infrastructure tasks.",
@@ -23,7 +23,7 @@
     "location": "Kuala Lumpur, Malaysia",
     "period": "Sep 2023 – Oct 2023",
     "type": "Full-Time",
-    "logo": "src/assets/logos/machines logo.png",
+    "logo": "/logos/machines logo.png",
     "responsibilities": [
       "Assisted customers by recommending suitable electronic products.",
       "Explained product features and benefits to support purchase decisions.",
@@ -37,7 +37,7 @@
     "location": "Kelantan, Malaysia",
     "period": "Feb 2023 – Jun 2023",
     "type": "Internship",
-    "logo": "src/assets/logos/JPS logo.png",
+    "logo": "/logos/jps logo.png",
     "responsibilities": [
       "Provided IT support by troubleshooting hardware and software issues.",
       "Assisted in maintaining IT documentation and system records.",
@@ -51,7 +51,7 @@
     "location": "Kuala Lumpur, Malaysia",
     "period": "Jun 2022 – Jul 2022",
     "type": "Full-Time",
-    "logo": "src/assets/logos/eco logo.png",
+    "logo": "/logos/eco logo.png",
     "responsibilities": [
       "Managed product inventory and stock organisation.",
       "Supported daily store operations and customer service.",
