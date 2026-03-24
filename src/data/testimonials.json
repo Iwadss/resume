@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Chen",
+    "role": "Chief Technology Officer",
+    "company": "Nexus Systems",
+    "content": "Ifwad's ability to simplify complex cloud architectures while maintaining top-tier security standards is unmatched. A truly dependable engineer.",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    "accentColor": "#06b6d4"
+  },
+  {
+    "id": 2,
+    "name": "David Miller",
+    "role": "Senior DevOps Lead",
+    "company": "CloudScale AI",
+    "content": "The transition to Azure was seamless thanks to his expertise. His focus on automation saved our team hundreds of hours annually.",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
+    "accentColor": "#8b5cf6"
+  },
+  {
+    "id": 3,
+    "name": "Elena Rodriguez",
+    "role": "Product Manager",
+    "company": "FinTech Flow",
+    "content": "A rare talent who bridges the gap between technical excellence and product vision. His work on our infrastructure was transformative.",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Elena",
+    "accentColor": "#10b981"
+  },
+  {
+    "id": 4,
+    "name": "James Wilson",
+    "role": "Infrastructure Architect",
+    "company": "Global Tech Corp",
+    "content": "Clean code, robust deployments, and a deep understanding of security. Ifwad is my first choice for any mission-critical systems.",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=James",
+    "accentColor": "#f59e0b"
+  },
+  {
+    "id": 5,
+    "name": "Maya Patel",
+    "role": "Head of Engineering",
+    "company": "SecureSync",
+    "content": "Working with Ifwad was a breeze. He brought clarity to our chaotic legacy systems and built a future-proof foundation.",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Maya",
+    "accentColor": "#ec4899"
+  }
+]

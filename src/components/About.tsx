@@ -21,9 +21,11 @@ const About = () => {
         <section id="about" className="bg-secondary/30 py-20 px-6 md:px-12 lg:px-20">
             <div className="max-w-7xl mx-auto space-y-5">
                 {/* Section Heading */}
-                <h2 className="text-4xl font-bold tracking-tight text-center md:text-left">
-                    About Me
-                </h2>
+                <div className="text-center mb-10">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                        About Me
+                    </h2>
+                </div>
 
                 {/* Content Layout: 2 Columns - Text & Summary Card */}
                 <div className="grid md:grid-cols-2 gap-8 items-start">

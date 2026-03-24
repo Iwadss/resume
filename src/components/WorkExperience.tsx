@@ -3,7 +3,7 @@ import { Calendar, MapPin, CheckCircle2, ChevronDown, ChevronUp } from "lucide-r
 import experiencesData from "@/data/workExperience.json";
 
 // ==============================
-// Data — sorted newest → oldest
+// Types
 // ==============================
 
 interface Experience {
@@ -26,206 +26,128 @@ const experiences: Experience[] = experiencesData;
 // ==============================
 
 const WorkExperience = () => {
-    const [activeId, setActiveId] = useState<string>("exxon");
     const [showMore, setShowMore] = useState(false);
-    const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set(["exxon"]));
-    const [dotTop, setDotTop] = useState(0);
+    const [revealedIds, setRevealedIds] = useState<Set<string>>(new Set());
+    const [lineProgress, setLineProgress] = useState(0);
 
-    const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
-    const timelineRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLDivElement>(null);
+    const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-    const updateActive = useCallback(() => {
-        const viewportMid = window.innerHeight * 0.4;
-        let closest = experiences[0].id;
-        let closestDist = Infinity;
+    // Scroll-driven timeline draw + card reveal via IntersectionObserver
+    const handleScroll = useCallback(() => {
+        if (!sectionRef.current) return;
 
-        for (const exp of experiences) {
-            const el = cardRefs.current[exp.id];
-            if (!el) continue;
-            const rect = el.getBoundingClientRect();
-            const dist = Math.abs(rect.top + rect.height / 2 - viewportMid);
-            if (dist < closestDist) {
-                closestDist = dist;
-                closest = exp.id;
-            }
-        }
-        setActiveId(closest);
+        const section = sectionRef.current;
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top;
+        const sectionHeight = rect.height;
+        const viewportHeight = window.innerHeight;
 
-        // Move floating dot to centre of active card
-        const activeEl = cardRefs.current[closest];
-        if (activeEl && sectionRef.current) {
-            const sectionRect = sectionRef.current.getBoundingClientRect();
-            const cardRect = activeEl.getBoundingClientRect();
-            setDotTop(cardRect.top - sectionRect.top + cardRect.height / 2);
-        }
-
-        // Fade-in cards entering viewport
-        for (const exp of experiences) {
-            const el = cardRefs.current[exp.id];
-            if (!el) continue;
-            if (el.getBoundingClientRect().top < window.innerHeight - 60) {
-                setVisibleIds((prev) => new Set([...prev, exp.id]));
-            }
-        }
+        // Calculate how far through the section we've scrolled (0 → 1)
+        const scrolled = Math.min(
+            Math.max((viewportHeight - sectionTop) / (sectionHeight + viewportHeight * 0.5), 0),
+            1
+        );
+        setLineProgress(scrolled);
     }, []);
 
+    // IntersectionObserver for card reveals
     useEffect(() => {
-        window.addEventListener("scroll", updateActive, { passive: true });
-        updateActive();
-        return () => window.removeEventListener("scroll", updateActive);
-    }, [updateActive, showMore]);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute("data-exp-id");
+                        if (id) {
+                            setRevealedIds((prev) => new Set([...prev, id]));
+                        }
+                    }
+                });
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+        );
+
+        // Observe current cards
+        Object.values(cardRefs.current).forEach((el) => {
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, [showMore]); // re-observe when cards expand
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [handleScroll]);
 
     const displayed = showMore ? experiences : [experiences[0]];
 
     return (
         <section id="experience" className="py-20 px-6 md:px-12 lg:px-20 bg-background">
-            <div className="max-w-7xl mx-auto space-y-10">
+            <div className="max-w-7xl mx-auto space-y-12">
 
-                {/* Heading */}
-                <div>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center md:text-left">
+                {/* Section Heading */}
+                <div className="text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
                         Work Experience
                     </h2>
-                    <p className="text-muted-foreground text-center md:text-left">
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
                         Professional and internship experience across technology and industry roles
                     </p>
                 </div>
 
-                {/* Timeline */}
+                {/* Timeline Container */}
                 <div ref={sectionRef} className="relative">
-                    {/* Vertical line */}
+
+                    {/* ── Central timeline line (desktop) / Left line (mobile) ── */}
                     <div
-                        ref={timelineRef}
-                        className="absolute left-[11px] md:left-[19px] top-3 bottom-3 w-px bg-border hidden sm:block"
+                        className="timeline-line absolute w-[2px] top-0 bottom-0
+                                   left-[20px] md:left-[24px] lg:left-1/2 lg:-translate-x-1/2
+                                   hidden sm:block"
+                        style={{ transform: `scaleY(${lineProgress})` }}
                     />
 
-                    {/* Floating animated dot */}
-                    <div
-                        className="absolute left-[4px] md:left-[12px] w-[15px] h-[15px] rounded-full bg-gradient-to-br from-[#7C4DFF] to-[#3BA8FF] border-4 border-background shadow-lg ring-2 ring-[#7C4DFF]/30 transition-all duration-300 ease-out hidden sm:block z-10"
-                        style={{ top: dotTop - 7.5 }}
-                    />
-
-                    <div className="space-y-6">
-                        {displayed.map((exp) => {
-                            const isActive = exp.id === activeId;
-                            const isVisible = visibleIds.has(exp.id);
+                    {/* ── Cards ── */}
+                    <div className="space-y-10 lg:space-y-16">
+                        {displayed.map((exp, index) => {
+                            const isRevealed = revealedIds.has(exp.id);
+                            const isLeft = index % 2 === 0; // alternates on desktop
 
                             return (
                                 <div
                                     key={exp.id}
+                                    data-exp-id={exp.id}
                                     ref={(el) => { cardRefs.current[exp.id] = el; }}
-                                    className={`relative pl-0 sm:pl-12 md:pl-14 transition-all duration-500
-                                        ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+                                    className={`relative ${isRevealed ? "card-revealed" : "card-hidden"}`}
                                 >
+                                    {/* ── Desktop alternating grid ── */}
+                                    <div className="hidden lg:grid grid-cols-[1fr_48px_1fr] gap-6 items-start">
+                                        {/* Left column */}
+                                        <div className="min-w-0">
+                                            {isLeft && <TimelineCard exp={exp} />}
+                                        </div>
 
-                                    {/* Card — same design for every role */}
-                                    <div className={`rounded-2xl overflow-hidden transition-all duration-300
-                                        ${isActive
-                                            ? "bg-white dark:bg-muted shadow-md ring-2 ring-primary/20"
-                                            : "bg-white dark:bg-muted shadow-sm hover:shadow-md hover:ring-2 hover:ring-primary/10"
-                                        }`}>
+                                        {/* Center node */}
+                                        <div className="flex justify-center">
+                                            <TimelineNode exp={exp} isRevealed={isRevealed} />
+                                        </div>
 
-                                        {/* Active accent bar */}
-                                        <div className={`h-1 w-full transition-all duration-300
-                                            ${isActive ? "bg-gradient-to-r from-[#7C4DFF] to-[#3BA8FF]" : "bg-border"}`}
-                                        />
+                                        {/* Right column */}
+                                        <div className="min-w-0">
+                                            {!isLeft && <TimelineCard exp={exp} />}
+                                        </div>
+                                    </div>
 
-                                        <div className="flex flex-col">
-                                            {/* Header Section: Responsive Grid */}
-                                            <div className="p-5 sm:p-6 lg:p-8 border-b border-border grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-6 items-start">
-                                                
-                                                {/* 1. Company Logo (Top on Mobile, Left on Desktop) */}
-                                                <div className="flex-shrink-0 w-16 h-16 lg:w-24 lg:h-24 bg-white rounded-2xl border border-border flex items-center justify-center p-3 shadow-sm overflow-hidden mx-auto lg:mx-0">
-                                                    {exp.logo ? (
-                                                        <img
-                                                            src={exp.logo}
-                                                            alt={exp.company}
-                                                            className="w-full h-full object-contain"
-                                                            onError={(e) => {
-                                                                const el = e.target as HTMLImageElement;
-                                                                el.style.display = "none";
-                                                                el.parentElement!.innerHTML =
-                                                                    `<span class="text-2xl font-bold bg-gradient-to-r from-[#7C4DFF] to-[#3BA8FF] bg-clip-text text-transparent">${exp.company.charAt(0)}</span>`;
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <span className="text-2xl font-bold bg-gradient-to-r from-[#7C4DFF] to-[#3BA8FF] bg-clip-text text-transparent">
-                                                            {exp.company.charAt(0)}
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                {/* Role & Company Details */}
-                                                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 overflow-hidden">
-                                                    <div className="flex-1 min-w-0 space-y-1.5 text-center lg:text-left">
-                                                        {/* 2. Job Title */}
-                                                        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-1">
-                                                            <h3 className="text-xl md:text-2xl font-bold tracking-tight">{exp.role}</h3>
-                                                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider bg-[#3BA8FF]/10 text-[#3BA8FF] px-2.5 py-1 rounded-full border border-[#3BA8FF]/20">
-                                                                {exp.type}
-                                                            </span>
-                                                        </div>
-                                                        
-                                                        {/* 3. Company Name */}
-                                                        <p className="text-lg font-bold bg-gradient-to-r from-[#7C4DFF] to-[#3BA8FF] bg-clip-text text-transparent">{exp.company}</p>
-                                                        
-                                                        {/* 4. Team Name */}
-                                                        {exp.team && (
-                                                            <p className="text-sm font-medium text-muted-foreground">{exp.team}</p>
-                                                        )}
-                                                    </div>
-
-                                                    {/* 5. Date & Location (Right-aligned on Desktop) */}
-                                                    <div className="flex flex-col items-center lg:items-end gap-2 text-sm text-muted-foreground shrink-0 lg:text-right">
-                                                        <span className="flex items-center gap-1.5 bg-secondary/50 px-3 py-1 rounded-full">
-                                                            <Calendar className="w-3.5 h-3.5" />{exp.period}
-                                                        </span>
-                                                        <span className="flex items-center gap-1.5 bg-secondary/50 px-3 py-1 rounded-full">
-                                                            <MapPin className="w-3.5 h-3.5" />{exp.location}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Body Section */}
-                                            <div className="p-5 sm:p-6 lg:p-8 space-y-8 bg-black/5 dark:bg-white/[0.02]">
-                                                {/* 6. Key Responsibilities */}
-                                                <div>
-                                                    <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 mb-4 flex items-center gap-2">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#7C4DFF] to-[#3BA8FF]" />
-                                                        Key Responsibilities
-                                                    </h4>
-                                                    <ul className="space-y-3">
-                                                        {exp.responsibilities.map((item, i) => (
-                                                            <li key={i} className="flex items-start gap-3 text-sm md:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                                                                <CheckCircle2 className="w-4 h-4 text-[#3BA8FF] mt-1 flex-shrink-0" />
-                                                                <span>{item}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-
-                                                {/* 7. Technologies Used */}
-                                                {exp.techUsed && exp.techUsed.length > 0 && (
-                                                    <div>
-                                                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/80 mb-4 flex items-center gap-2">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                                                            Technologies Used
-                                                        </h4>
-                                                        <div className="flex flex-wrap gap-2">
-                                                            {exp.techUsed.map((tech) => (
-                                                                <span
-                                                                    key={tech}
-                                                                    className="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/10 shadow-sm transition-transform hover:-translate-y-0.5"
-                                                                >
-                                                                    {tech}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
+                                    {/* ── Mobile / Tablet: left-aligned timeline ── */}
+                                    <div className="lg:hidden flex gap-4 sm:gap-6">
+                                        {/* Mobile node */}
+                                        <div className="flex-shrink-0 relative z-10">
+                                            <TimelineNode exp={exp} isRevealed={isRevealed} />
+                                        </div>
+                                        {/* Mobile card */}
+                                        <div className="flex-1 min-w-0">
+                                            <TimelineCard exp={exp} />
                                         </div>
                                     </div>
                                 </div>
@@ -235,28 +157,27 @@ const WorkExperience = () => {
                 </div>
 
                 {/* View More / Less */}
-                <div className="flex justify-center sm:pl-14">
+                <div className="flex justify-center">
                     <button
                         onClick={() => {
                             if (showMore) {
-                                // Scroll back to top of experience section when showing less
                                 const el = document.getElementById("experience");
                                 if (el) {
-                                    const offset = 90; // Header offset
+                                    const offset = 90;
                                     const bodyRect = document.body.getBoundingClientRect().top;
                                     const elementRect = el.getBoundingClientRect().top;
                                     const elementPosition = elementRect - bodyRect;
                                     const offsetPosition = elementPosition - offset;
-
-                                    window.scrollTo({
-                                        top: offsetPosition,
-                                        behavior: "smooth"
-                                    });
+                                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                                 }
                             }
                             setShowMore((v) => !v);
                         }}
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl border border-border text-sm font-semibold text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 shadow-sm"
+                        className="flex items-center gap-2 px-6 py-3 rounded-xl
+                                   border border-white/10 text-sm font-semibold
+                                   text-muted-foreground hover:text-white
+                                   hover:border-blue-500/40 hover:bg-blue-500/5
+                                   transition-all duration-300 shadow-sm min-h-[44px]"
                     >
                         {showMore ? (
                             <><ChevronUp className="w-4 h-4" />Show Less</>
@@ -270,5 +191,112 @@ const WorkExperience = () => {
         </section>
     );
 };
+
+// ==============================
+// Sub-components
+// ==============================
+
+/** Timeline node — the logo circle sitting on the vertical axis */
+const TimelineNode = ({ exp, isRevealed }: { exp: Experience; isRevealed: boolean }) => (
+    <div className={`timeline-node ${isRevealed ? "active" : ""}`}>
+        {exp.logo ? (
+            <img
+                src={exp.logo}
+                alt={exp.company}
+                className="w-8 h-8 object-contain"
+                onError={(e) => {
+                    const el = e.target as HTMLImageElement;
+                    el.style.display = "none";
+                    el.parentElement!.innerHTML =
+                        `<span class="text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">${exp.company.charAt(0)}</span>`;
+                }}
+            />
+        ) : (
+            <span className="text-sm font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                {exp.company.charAt(0)}
+            </span>
+        )}
+    </div>
+);
+
+/** The glassmorphism experience card */
+const TimelineCard = ({ exp }: { exp: Experience }) => (
+    <div className="glass-card overflow-hidden group">
+
+        {/* Gradient accent bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-60 group-hover:opacity-100 transition-opacity" />
+
+        {/* Header */}
+        <div className="p-5 sm:p-6 space-y-3">
+            {/* Title + Type badge */}
+            <div className="flex flex-wrap items-start justify-between gap-2">
+                <div className="space-y-1 min-w-0">
+                    <h3 className="text-lg md:text-xl font-bold tracking-tight leading-tight">
+                        {exp.role}
+                    </h3>
+                    <p className="text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        {exp.company}
+                    </p>
+                    {exp.team && (
+                        <p className="text-sm text-muted-foreground">{exp.team}</p>
+                    )}
+                </div>
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider
+                                 bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-full
+                                 border border-blue-500/20 flex-shrink-0">
+                    {exp.type}
+                </span>
+            </div>
+
+            {/* Date + Location pills */}
+            <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full min-h-[32px]">
+                    <Calendar className="w-3 h-3 text-blue-400" />{exp.period}
+                </span>
+                <span className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full min-h-[32px]">
+                    <MapPin className="w-3 h-3 text-purple-400" />{exp.location}
+                </span>
+            </div>
+        </div>
+
+        {/* Responsibilities */}
+        <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
+            <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground/70 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+                Key Achievements
+            </h4>
+            <ul className="space-y-2.5">
+                {exp.responsibilities.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-zinc-400 leading-relaxed">
+                        <CheckCircle2 className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                    </li>
+                ))}
+            </ul>
+
+            {/* Technologies */}
+            {exp.techUsed && exp.techUsed.length > 0 && (
+                <div className="pt-3 border-t border-white/5">
+                    <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground/70 mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                        Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                        {exp.techUsed.map((tech) => (
+                            <span
+                                key={tech}
+                                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg
+                                           bg-white/5 text-zinc-300 border border-white/8
+                                           transition-transform hover:-translate-y-0.5"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    </div>
+);
 
 export default WorkExperience;

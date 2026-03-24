@@ -1,9 +1,10 @@
-import { Award, ShieldCheck, ExternalLink, CalendarCheck, Hash } from "lucide-react";
-
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { ShieldCheck, ExternalLink, CalendarCheck, Hash, Award } from "lucide-react";
 import certificationsData from "@/data/certifications.json";
 
 // ==============================
-// Certifications Component
+// Types
 // ==============================
 
 interface Certification {
@@ -26,124 +27,179 @@ interface Certification {
 
 const certifications: Certification[] = certificationsData;
 
+// Map Tailwind gradient class → RGB for neon glow
+const glowColorMap: Record<string, string> = {
+    "from-sky-500 to-blue-600": "56, 189, 248",
+    "from-orange-500 to-amber-600": "249, 115, 22",
+    "from-green-500 to-emerald-600": "34, 197, 94",
+    "from-purple-500 to-violet-600": "168, 85, 247",
+    "from-red-500 to-rose-600": "239, 68, 68",
+};
+
+function getGlowRGB(color: string): string {
+    return glowColorMap[color] || "56, 189, 248";
+}
+
+// ==============================
+// Component
+// ==============================
+
 const Certifications = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"],
+    });
+
+    // Stronger parallax: move track as user scrolls past
+    const parallaxRaw = useTransform(scrollYProgress, [0, 1], [150, -150]);
+    const parallaxX = useSpring(parallaxRaw, { stiffness: 100, damping: 30 });
+
+    // Update drag constraints and track active dot
+    useEffect(() => {
+        const updateConstraints = () => {
+            if (carouselRef.current && containerRef.current) {
+                const trackWidth = carouselRef.current.scrollWidth;
+                const containerWidth = containerRef.current.offsetWidth;
+                setDragConstraints({
+                    left: -(trackWidth - containerWidth + 40),
+                    right: 40
+                });
+            }
+        };
+
+        updateConstraints();
+        window.addEventListener("resize", updateConstraints);
+        return () => window.removeEventListener("resize", updateConstraints);
+    }, [certifications.length]);
+
+    const onDragEnd = () => {
+        // No index tracking needed as dots are removed
+    };
+
     return (
-        <section id="certifications" className="py-20 px-6 md:px-12 lg:px-20 bg-secondary/30">
-            <div className="max-w-7xl mx-auto space-y-10">
-                {/* Section Heading */}
-                <div>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center md:text-left">
+        <section 
+            id="certifications" 
+            ref={containerRef}
+            className="py-24 px-4 md:px-8 overflow-hidden bg-secondary/30"
+        >
+            <div className="max-w-7xl mx-auto mb-16 px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center"
+                >
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
                         Certifications
                     </h2>
-                    <p className="text-muted-foreground text-center md:text-left">
-                        Industry-recognised credentials and qualifications
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                        Technical credentials and technical expertise.
                     </p>
-                </div>
+                </motion.div>
+            </div>
 
-                {/* Certification Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
-                    {certifications.map((cert, index) => (
-                        <div
-                            key={index}
-                            className="bg-white dark:bg-muted rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] hover:ring-2 hover:ring-primary/20 overflow-hidden"
-                        >
-                            {/* Top gradient accent bar */}
-                            <div className={`h-1.5 w-full bg-gradient-to-r ${cert.color}`} />
+            {/* Draggable & Parallax Track */}
+            <div className="relative group cursor-grab active:cursor-grabbing">
+                <motion.div 
+                    ref={carouselRef}
+                    drag="x"
+                    dragConstraints={dragConstraints}
+                    dragElastic={0.1}
+                    onDragEnd={onDragEnd}
+                    style={{ x: parallaxX }}
+                    whileDrag={{ cursor: "grabbing" }}
+                    className="flex gap-6 md:gap-8 px-4 md:px-20 lg:px-[10%] py-4"
+                >
+                    {certifications.map((cert, index) => {
+                        const glowRGB = getGlowRGB(cert.color);
 
-                            <div className="p-8 space-y-6">
-                                {/* Header Row */}
-                                <div className="flex items-start gap-4">
-                                    {/* Badge Icon */}
-                                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-white border border-border shadow-sm flex items-center justify-center p-1.5">
-                                        <img
-                                            src={cert.logo}
-                                            alt={cert.issuer}
-                                            className="w-full h-full object-contain"
-                                            onError={(e) => {
-                                                const el = e.target as HTMLImageElement;
-                                                el.style.display = "none";
-                                                el.parentElement!.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>`;
-                                            }}
-                                        />
+                        return (
+                            <div
+                                key={index}
+                                className="cert-card-container h-[420px] md:h-[450px] w-[300px] md:w-[380px] shrink-0"
+                                style={{ borderRadius: "1.5rem" }}
+                            >
+                                <div className="cert-card-inner">
+                                    {/* ═══════ FRONT FACE ═══════ */}
+                                    <div 
+                                        className="cert-card-front h-full flex flex-col p-8 rounded-3xl border border-white/10 bg-muted/40 backdrop-blur-xl transition-all duration-300 group-hover:bg-muted/60 relative overflow-hidden"
+                                        style={{ boxShadow: `0 0 20px -10px rgba(${glowRGB}, 0.2)` }}
+                                    >
+                                        <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-30" />
+                                        
+                                        <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 md:space-y-6">
+                                            <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-4 shadow-sm">
+                                                <img src={cert.logo} alt={cert.issuer} className="w-full h-full object-contain" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground line-clamp-2">{cert.name}</h3>
+                                                <p className="text-xs md:text-sm text-muted-foreground font-medium">{cert.issuer}</p>
+                                            </div>
+                                            <div className="flex flex-col items-center gap-2">
+                                                <div className="flex items-center gap-1.5">
+                                                    <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
+                                                    <span className="text-[10px] md:text-xs font-semibold text-green-600 dark:text-green-400">{cert.status}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5 text-[10px] md:text-xs text-muted-foreground">
+                                                    <CalendarCheck className="w-3 md:w-3.5 h-3 md:h-3.5" />
+                                                    <span>Issued {cert.date}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-base leading-snug">{cert.name}</h3>
-                                        <p className="text-sm text-muted-foreground">{cert.issuer}</p>
-                                        <div className="flex items-center gap-1.5 mt-1">
-                                            <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
-                                            <span className="text-xs font-medium text-green-600 dark:text-green-400">
-                                                {cert.status}
-                                            </span>
+                                    {/* ═══════ BACK FACE ═══════ */}
+                                    <div 
+                                        className="cert-card-back h-full flex flex-col p-6 rounded-3xl border border-white/10 bg-muted/40 backdrop-blur-xl relative overflow-hidden"
+                                        style={{ boxShadow: `0 0 20px -10px rgba(${glowRGB}, 0.2)` }}
+                                    >
+                                        <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-30" />
+                                        
+                                        <div className="flex-1 flex flex-col justify-between space-y-3 md:space-y-4 text-left">
+                                            <p className="text-[10px] md:text-xs text-muted-foreground leading-relaxed line-clamp-3 md:line-clamp-none">{cert.description}</p>
+                                            <div className="space-y-1.5 md:space-y-2">
+                                                <h4 className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/70">Key Skills</h4>
+                                                <div className="flex flex-wrap gap-1 md:gap-1.5">
+                                                    {cert.skills.slice(0, 6).map((skill) => (
+                                                        <span key={skill} className="text-[9px] md:text-[10px] font-semibold px-2 md:px-2.5 py-0.5 md:py-1 rounded-full border" style={{ background: `rgba(${glowRGB}, 0.05)`, borderColor: `rgba(${glowRGB}, 0.2)`, color: `rgba(${glowRGB}, 0.9)` }}>{skill}</span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="space-y-1 md:space-y-1.5">
+                                                <div className="flex items-center gap-2 text-[10px] md:text-xs">
+                                                    <Hash className="w-3 md:w-3.5 h-3 md:h-3.5 text-muted-foreground" />
+                                                    <span className="font-mono text-[9px] md:text-[10px] text-muted-foreground"><span className="font-semibold text-foreground">ID:</span> {cert.credentialId}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2 text-[10px] md:text-xs">
+                                                    <CalendarCheck className="w-3 md:w-3.5 h-3 md:h-3.5 text-muted-foreground" />
+                                                    <span className="text-muted-foreground"><span className="font-semibold text-foreground">Expires:</span> {cert.expiry}</span>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-1.5 md:space-y-2 pt-2 md:pt-3 border-t border-border dark:border-white/5">
+                                                <a href={cert.verifyUrl} target="_blank" rel="noopener noreferrer" className="cert-ghost-btn justify-center text-[10px] md:text-xs py-1.5" style={{ borderColor: `rgba(${glowRGB}, 0.3)`, color: `rgba(${glowRGB}, 0.9)` }}>
+                                                    <ShieldCheck className="w-3 md:w-3.5 h-3 md:h-3.5 mr-1.5" /> Verify <ExternalLink className="w-2.5 md:w-3 h-2.5 md:h-3 ml-1.5" />
+                                                </a>
+                                                <a href={cert.credlyUrl} target="_blank" rel="noopener noreferrer" className="cert-ghost-btn justify-center text-[10px] md:text-xs py-1.5" style={{ borderColor: `rgba(${glowRGB}, 0.3)`, color: `rgba(${glowRGB}, 0.9)` }}>
+                                                    <Award className="w-3 md:w-3.5 h-3 md:h-3.5 mr-1.5" /> Credly <ExternalLink className="w-2.5 md:w-3 h-2.5 md:h-3 ml-1.5" />
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Description */}
-                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                    {cert.description}
-                                </p>
-
-                                {/* Meta details */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
-                                    <div className="flex items-center gap-1.5">
-                                        <CalendarCheck className="w-3.5 h-3.5 flex-shrink-0 text-sky-500" />
-                                        <span><span className="font-medium text-foreground">Issued:</span> {cert.date}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <CalendarCheck className="w-3.5 h-3.5 flex-shrink-0 text-muted-foreground" />
-                                        <span><span className="font-medium text-foreground">Expires:</span> {cert.expiry}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5 sm:col-span-2">
-                                        <Hash className="w-3.5 h-3.5 flex-shrink-0 text-muted-foreground" />
-                                        <span className="font-mono truncate">
-                                            <span className="font-medium not-italic text-foreground">ID:</span> {cert.credentialId}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Skill Tags */}
-                                <div className="flex flex-wrap gap-1.5">
-                                    {cert.skills.map((skill) => (
-                                        <span
-                                            key={skill}
-                                            className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                {/* Verify Links */}
-                                <div className="flex flex-wrap gap-3 pt-1 border-t border-border">
-                                    <a
-                                        href={cert.verifyUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors group"
-                                    >
-                                        <Award className="w-3.5 h-3.5 group-hover:text-primary transition-colors" />
-                                        Verify on CompTIA
-                                        <ExternalLink className="w-3 h-3 group-hover:text-primary transition-colors" />
-                                    </a>
-                                    <a
-                                        href={cert.credlyUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors group"
-                                    >
-                                        <Award className="w-3.5 h-3.5 group-hover:text-primary transition-colors" />
-                                        View Credly Badge
-                                        <ExternalLink className="w-3 h-3 group-hover:text-primary transition-colors" />
-                                    </a>
-                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        );
+                    })}
+                </motion.div>
             </div>
         </section>
     );
 };
 
 export default Certifications;
+
+

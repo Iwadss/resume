@@ -136,3 +136,162 @@
   background: linear-gradient(135deg, #0b0b1a, #1a0b3a);
   background-attachment: fixed;
 }
+
+/* =============================
+   Work Experience Timeline
+   ============================= */
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.15),
+    0 0 48px rgba(168, 85, 247, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+/* Timeline vertical line */
+.timeline-line {
+  background: linear-gradient(180deg, #3B82F6, #A855F7);
+  transform-origin: top center;
+  transition: transform 0.1s linear;
+}
+
+/* Timeline node (logo circle on axis) */
+.timeline-node {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-node.active {
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
+}
+
+/* Card reveal animation */
+@keyframes card-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-revealed {
+  animation: card-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.card-hidden {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+/* =============================
+   Certification 3D Flip Cards
+   ============================= */
+
+/* Container with perspective */
+.cert-card-container {
+  perspective: 1000px;
+  cursor: pointer;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  position: relative;
+}
+
+.cert-card-container:hover {
+  transform: translateY(-6px);
+}
+
+/* Inner wrapper — flips on container hover */
+.cert-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.cert-card-container:hover .cert-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front and back faces */
+.cert-card-front,
+.cert-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cert-card-back {
+  transform: rotateY(180deg);
+}
+
+/* ── Card face backgrounds ── */
+
+/* Dark mode (default for this dark-first theme) */
+.dark .cert-card-front,
+.dark .cert-card-back {
+  background: transparent;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Light mode */
+.cert-card-front,
+.cert-card-back {
+  background: transparent;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── Ghost button ── */
+.cert-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: transparent;
+  color: rgba(56, 189, 248, 0.9);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cert-ghost-btn:hover {
+  border-color: rgba(56, 189, 248, 0.7);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+  color: rgba(56, 189, 248, 1);
+  background: rgba(56, 189, 248, 0.05);
+}

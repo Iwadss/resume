@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme-provider";
 // @ts-expect-error: GlassSurface is missing types
 import GlassSurface from "./GlassSurface";
 
 const Header = () => {
-    // Access current theme and toggle method
-    const { theme, setTheme } = useTheme();
+    // Access current theme (always "dark")
+    const { theme } = useTheme();
 
     // Track scroll state
     const [isScrolled, setIsScrolled] = useState(false);
@@ -61,10 +60,7 @@ const Header = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMobileMenuOpen]);
 
-    // Toggle light/dark theme
-    const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
+    // Theme is strictly "dark" - toggle removed
 
     return (
         <header className="fixed top-5 left-0 right-0 z-50 px-5 pointer-events-none">
@@ -115,18 +111,7 @@ const Header = () => {
                                 })}
                             </nav>
 
-                            {/* Theme Toggle */}
-                            <div className="flex items-center pl-6">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors"
-                                    onClick={toggleTheme}
-                                    aria-label="Toggle theme"
-                                >
-                                    {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                                </Button>
-                            </div>
+                            {/* Theme Toggle Removed */}
                         </div>
                     </GlassSurface>
                 </div>
@@ -184,13 +169,7 @@ const Header = () => {
                 </div>
 
                 <div className="flex flex-col items-center justify-center h-full space-y-8 px-10">
-                    {/* Theme Toggle in Mobile Overlay */}
-                    <button 
-                        onClick={toggleTheme}
-                        className="mb-4 p-4 rounded-full bg-white/5 border border-white/10 text-white/80 animate-in fade-in zoom-in duration-500 delay-100"
-                    >
-                        {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
-                    </button>
+                    {/* Theme Toggle Removed */}
 
                     {navLinks.map((link, index) => {
                         const isActive = activeSection === link.href.substring(1);

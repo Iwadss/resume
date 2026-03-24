@@ -7,23 +7,23 @@
 // Wrap your app with <ThemeProvider> to enable theme switching.
 // ==============================
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 // ==============================
 // Type Definitions
 // ==============================
 
-// Enum-like theme types available in the app
-type Theme = "dark" | "light" | "system";
+// Since the app is dark mode only, the theme is strictly "dark"
+type Theme = "dark";
 
 // Props passed to the <ThemeProvider /> component
 type ThemeProviderProps = {
-    children: React.ReactNode;       // Nested React components
-    defaultTheme?: Theme;           // Fallback theme if none stored
-    storageKey?: string;            // Key used in localStorage
+    children: React.ReactNode;       
+    defaultTheme?: string;           
+    storageKey?: string;            
 };
 
-// Internal context structure to store theme state and setter
+// Internal context structure
 type ThemeProviderState = {
     theme: Theme;
     setTheme: (theme: Theme) => void;
@@ -33,13 +33,11 @@ type ThemeProviderState = {
 // Context Initialization
 // ==============================
 
-// Fallback state if ThemeProvider is not wrapped properly
 const initialState: ThemeProviderState = {
-    theme: "system",
+    theme: "dark",
     setTheme: () => null,
 };
 
-// Create global Theme Context
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 // ==============================
@@ -48,57 +46,18 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
     children,
-    defaultTheme = "system",
-    storageKey = "vite-ui-theme",
     ...props
 }: ThemeProviderProps) {
-    // Load stored theme or fallback to default
-    const [theme, setTheme] = useState<Theme>(
-        () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-    );
-
-    // Sync theme with <html> class and listen for system changes
+    // Force dark mode globally on mount
     useEffect(() => {
         const root = window.document.documentElement;
+        root.classList.remove("light");
+        root.classList.add("dark");
+    }, []);
 
-        // Ensure clean slate before applying
-        root.classList.remove("light", "dark");
-
-        if (theme === "system") {
-            // Detect system theme preference
-            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
-
-            root.classList.add(systemTheme);
-
-            // Automatically update on system theme changes
-            const handleSystemThemeChange = (event: MediaQueryListEvent) => {
-                root.classList.remove("light", "dark");
-                root.classList.add(event.matches ? "dark" : "light");
-            };
-
-            // Listen to OS-level changes
-            const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
-            mediaQueryList.addEventListener("change", handleSystemThemeChange);
-
-            // Cleanup listener on unmount
-            return () => {
-                mediaQueryList.removeEventListener("change", handleSystemThemeChange);
-            };
-        } else {
-            // Apply manually selected theme
-            root.classList.add(theme);
-        }
-    }, [theme]);
-
-    // Context value to provide globally
     const value = {
-        theme,
-        setTheme: (theme: Theme) => {
-            localStorage.setItem(storageKey, theme); // Persist theme choice
-            setTheme(theme);                         // Update state
-        },
+        theme: "dark" as Theme,
+        setTheme: () => null, // No-op since we only have dark mode
     };
 
     return (

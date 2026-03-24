@@ -11,11 +11,11 @@ const Projects = () => {
             <div className="max-w-7xl mx-auto space-y-10 md:space-y-12">
                 
                 {/* Main Header */}
-                <div>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center md:text-left">
+                <div className="text-center mb-10">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
                         Projects
                     </h2>
-                    <p className="text-muted-foreground text-center md:text-left mt-4 md:mt-5">
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
                         Engineering work from enterprise environments and personal development projects.
                     </p>
                 </div>

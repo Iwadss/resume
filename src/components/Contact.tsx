@@ -12,9 +12,11 @@ const Contact = () => {
         >
             <div className="max-w-7xl mx-auto space-y-12">
                 {/* Section Heading */}
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center md:text-left">
-                    Get In Touch
-                </h2>
+                <div className="text-center mb-10">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                        Get In Touch
+                    </h2>
+                </div>
 
                 {/* Grid Layout: Left = Info / Right = Map */}
                 <div className="grid md:grid-cols-2 gap-8 items-start">

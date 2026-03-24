@@ -9,7 +9,7 @@
     "date": "13 December 2025",
     "expiry": "13 December 2028",
     "status": "Active",
-    "logo": "https://www.vectorlogo.zone/logos/comptia/comptia-ar21.svg",
+    "logo": "/assets/certificates/CompTIA_Cloud_Plus.png",
     "description": "Validates skills required to maintain and optimise cloud infrastructure services, including security, deployment models, and automation.",
     "skills": [
       "Cloud Architecture",
